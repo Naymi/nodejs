@@ -9,17 +9,22 @@ const toTranslate = {
   texts: "Привет",
   targetLanguageCode: "it",
 };
-
-axios
-  .post(
-    "https://translate.api.cloud.yandex.net/translate/v2/translate",
-    toTranslate,
-    {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${TOKEN}`,
-      },
-    }
-  )
-  .then((res) => console.log(res.data))
-  .catch((err) => console.log(err));
+const main = async ()=>{
+  try{
+    const response = await axios
+      .post(
+        "https://translate.api.cloud.yandex.net/translate/v2/translate",
+        toTranslate,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${TOKEN}`,
+          },
+        }
+      )
+    console.log(response.data)
+  }catch(err){
+    console.error(err)
+  }
+}
+main()
