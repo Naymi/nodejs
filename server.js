@@ -51,6 +51,21 @@ app.use(passport.session());
 const router = require("./routers");
 app.use(router);
 
+app.use((err, rq,rs,next)=>{
+  if (err.type === 'FATAL')
+     return rs.render('fatal-error', err.message)
+  next(err)
+})
+
+app.use((err, rq, rs, next) => {
+  if (err.type === 'DATABASE_DISCONNECTED'){
+    console.error('DATABASE DISCONNECTED')
+    rs.render('fatal-error', err.message)
+    process.exit(1)
+  }
+  next(err)
+})
+
 // START APP
 
 app.listen(8080, () => {
